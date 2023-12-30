@@ -2,8 +2,8 @@
 
 quite minimal config
 
-but this config doesn't contain a lot of remap so for remap consider using ThePrimeagen repo [init.lua](https://github.com/ThePrimeagen/init.lua).
+mainly used ThePrimeagen repo [init.lua](https://github.com/ThePrimeagen/init.lua) but used [lazy.nvim](https://github.com/folke/lazy.nvim) instead of [packer.nvim](https://github.com/wbthomason/packer.nvim).
 
 Prerequisite: install [ripgrep](https://github.com/BurntSushi/ripgrep).
 
-[The full video of ThePrimeagen setting up this cofing](https://www.youtube.com/watch?v=w7i4amO_zaE)
+[The full video of ThePrimeagen setting up his config](https://www.youtube.com/watch?v=w7i4amO_zaE)
