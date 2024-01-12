@@ -22,7 +22,7 @@ return {
     end)
     vim.keymap.set('n', '<leader>pWs', function()
       local word = vim.fn.expand("<cWORD>")
-      builtin.grep_sting({ search = word })
+      builtin.grep_string({ search = word })
     end)
     vim.keymap.set('n', '<leader>ps', function()
       builtin.grep_string({ search = vim.fn.input("Grep > ") })
