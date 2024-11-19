@@ -1,16 +1,16 @@
 return {
-  {
-    "nvim-lua/plenary.nvim",
-    name = "plenary"
-  },
+    {
+        "nvim-lua/plenary.nvim",
+        name = "plenary"
+    },
 
-  "theprimeagen/refactoring.nvim",
-  "nvim-treesitter/nvim-treesitter-context",
+    "theprimeagen/refactoring.nvim",
+    "nvim-treesitter/nvim-treesitter-context",
+    "eandrju/cellular-automaton.nvim",
+    "luckasRanarison/tailwind-tools.nvim",
 
-  "eandrju/cellular-automaton.nvim",
-
-  {
-    "windwp/nvim-autopairs",
-    config = function() require("nvim-autopairs").setup {} end
-  },
+    {
+        "windwp/nvim-autopairs",
+        config = function() require("nvim-autopairs").setup {} end
+    },
 }

@@ -23,12 +23,6 @@ autocmd('TextYankPost', {
     end,
 })
 
-autocmd({"BufWritePre"}, {
-    group = rustygroup,
-    pattern = "*",
-    command = "%s/\\s\\+$//e",
-})
-
 
 -- autocmd
 autocmd({"LspAttach"}, {
