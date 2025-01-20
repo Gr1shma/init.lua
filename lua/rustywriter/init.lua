@@ -3,7 +3,7 @@ require("rustywriter.remap")
 require("rustywriter.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
-local rustygroup = augroup('rustywriter', {})
+local TheGrishmaGroup = augroup('TheGrishma', {})
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -23,10 +23,9 @@ autocmd('TextYankPost', {
     end,
 })
 
-
 -- autocmd
 autocmd({"LspAttach"}, {
-    group = rustygroup,
+    group = TheGrishmaGroup,
     callback = function(e)
         local opts = { buffer = e.buf }
         vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
