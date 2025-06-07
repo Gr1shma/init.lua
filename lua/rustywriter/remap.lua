@@ -24,11 +24,13 @@ vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
+vim.g.ftplugin_sql_omni_key = '<C-j>'
 -- vim.keymap.set("i", "jk", "<Esc>") (not used after remaping ctrl to caps);
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
 
 vim.keymap.set("n", "<C-t>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-b>", "<cmd>cprev<CR>zz")
