@@ -30,14 +30,15 @@ return {
                 "gopls",
                 "rust_analyzer",
                 "emmet_ls",
+                "clangd"
             },
             handlers = {
-                function (server_name)
-                    require("lspconfig")[server_name].setup{
+                function(server_name)
+                    require("lspconfig")[server_name].setup {
                         capabilities = capabilities
                     }
                 end,
-                ["lua_ls"] = function ()
+                ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
                     lspconfig.lua_ls.setup {
                         capabilities = capabilities,
@@ -54,7 +55,7 @@ return {
         });
 
         -- Set up nvim-cmp.
-        local cmp_select = {behavior = cmp.SelectBehavior.Select}
+        local cmp_select = { behavior = cmp.SelectBehavior.Select }
         cmp.setup({
             snippet = {
                 expand = function(args)
@@ -73,8 +74,8 @@ return {
                 { name = 'luasnip' },
                 { name = 'conventionalcommits' },
             }, {
-                    { name = 'buffer' },
-                })
+                { name = 'buffer' },
+            })
         });
         vim.diagnostic.config({
             virtual_text = true,
