@@ -30,7 +30,10 @@ return {
                 "gopls",
                 "rust_analyzer",
                 "emmet_ls",
-                "clangd"
+                "clangd",
+                "astro",
+                "cssls",
+                "tailwindcss"
             },
             handlers = {
                 function(server_name)
