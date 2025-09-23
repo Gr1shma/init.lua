@@ -29,7 +29,9 @@ vim.g.ftplugin_sql_omni_key = '<C-j>'
 
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", function()
+    require("conform").format({ bufnr = 0 })
+end)
 vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "LSP Code Action" })
 
 vim.keymap.set("n", "<C-t>", "<cmd>cnext<CR>zz")
