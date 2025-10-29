@@ -1,7 +1,7 @@
 return {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
-    config = function ()
+    config = function()
         local harpoon = require("harpoon")
 
         -- REQUIRED
@@ -21,4 +21,3 @@ return {
         vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
     end,
 }
-

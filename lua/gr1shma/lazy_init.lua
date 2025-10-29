@@ -12,4 +12,4 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-return require('lazy').setup({ spec = "rustywriter.lazy", change_detection = { notify = false } })
+return require('lazy').setup({ spec = "gr1shma.lazy", change_detection = { notify = false } })

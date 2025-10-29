@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-    color = color or "catppuccin" or "rose-pine"
+    color = color or "catppuccin" or "rose-pine-moon"
     vim.cmd.colorscheme(color)
 
     vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -7,23 +7,6 @@ function ColorMyPencils(color)
 end
 
 return {
-    {
-        'folke/tokyonight.nvim',
-        name = 'tokyonight',
-        config = function()
-            require("tokyonight").setup({
-                style = "strom",
-                terminal_colors = true,
-                transparent = true,
-                styles = {
-                    comments = { italic = false },
-                    keywords = { italic = false },
-                    sidebars = "dark",
-                    floats = "dark",
-                }
-            })
-        end
-    },
     {
         "catppuccin/nvim",
         name = "catppuccin",
@@ -66,17 +49,7 @@ return {
                     markdown = true,
                 },
             })
-        end,
-    },
-    {
-
-        "rose-pine/neovim",
-        name = 'rose-pine',
-        config = function()
-            require('rose-pine').setup({
-                disable_background = true
-            })
             ColorMyPencils()
-        end
+        end,
     },
 }
