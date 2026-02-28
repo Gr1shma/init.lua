@@ -1,122 +1,148 @@
 return {
-    "neovim/nvim-lspconfig",
-    dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-cmdline",
-        "hrsh7th/nvim-cmp",
-        "L3MON4D3/LuaSnip",
-        "saadparwaiz1/cmp_luasnip",
-        "j-hui/fidget.nvim",
-    },
-    config = function()
-        local cmp = require("cmp");
-        local cmp_lsp = require("cmp_nvim_lsp")
-        local capabilities = vim.tbl_deep_extend(
-            "force",
-            {},
-            vim.lsp.protocol.make_client_capabilities(),
-            cmp_lsp.default_capabilities()
-        )
-        require("fidget").setup();
-        require("mason").setup();
-        require("mason-lspconfig").setup({
-            ensure_installed = {
-                "lua_ls",
-                "ts_ls",
-                "gopls",
-                "rust_analyzer",
-                "emmet_ls",
-                "clangd",
-                "astro",
-                "cssls",
-                "tailwindcss"
-            },
-            handlers = {
-                function(server_name)
-                    require("lspconfig")[server_name].setup {
-                        capabilities = capabilities
-                    }
-                end,
-                zls = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.zls.setup({
-                        root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
-                        settings = {
-                            zls = {
-                                enable_inlay_hints = true,
-                                enable_snippets = true,
-                                warn_style = true,
-                            },
-                        },
-                    })
-                    vim.g.zig_fmt_parse_errors = 0
-                    vim.g.zig_fmt_autosave = 0
-                end,
-                ["lua_ls"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.lua_ls.setup {
-                        capabilities = capabilities,
-                        settings = {
-                            Lua = {
-                                format = {
-                                    enable = true,
-                                    defaultConfig = {
-                                        indent_style = "space",
-                                        indext_size = "2"
-                                    }
-                                },
-                            }
-                        }
-                    }
-                end,
-                ["tailwindcss"] = function()
-                    local lspconfig = require("lspconfig")
-                    lspconfig.tailwindcss.setup({
-                        capabilities = capabilities,
-                        filetypes = { "html", "css", "scss", "javascript", "javascriptreact", "typescript", "typescriptreact", "vue", "svelte", "heex" },
-                    })
-                end,
-            }
-        });
+	"neovim/nvim-lspconfig",
+	dependencies = {
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		"j-hui/fidget.nvim",
+		{
+			"saghen/blink.cmp",
+			version = "*",
+			dependencies = {
+				{
+					"L3MON4D3/LuaSnip",
+					version = "v2.*",
+					build = "make install_jsregexp",
+					dependencies = { "rafamadriz/friendly-snippets" },
+					config = function()
+						local ls = require("luasnip")
+						ls.filetype_extend("javascript", { "jsdoc" })
+						require("luasnip.loaders.from_vscode").lazy_load()
+					end,
+				},
+			},
+			opts = {
+				keymap = {
+					preset = "default",
+					["<CR>"] = { "select_and_accept", "fallback" },
+				},
+				appearance = {
+					nerd_font_variant = "mono",
+				},
+				completion = {
+					documentation = {
+						auto_show = true,
+						auto_show_delay_ms = 200,
+					},
+				},
+				sources = {
+					default = { "lazydev", "lsp", "path", "snippets", "buffer" },
+					providers = {
+						lazydev = {
+							name = "LazyDev",
+							module = "lazydev.integrations.blink",
+							score_offset = 100,
+						},
+					},
+				},
+				signature = { enabled = true },
+				fuzzy = { implementation = "prefer_rust_with_warning" },
+				snippets = { preset = "luasnip" },
+			},
+			opts_extend = { "sources.default" },
+		},
+	},
+	config = function()
+		require("fidget").setup()
+		require("mason").setup()
 
-        -- Set up nvim-cmp.
-        local cmp_select = { behavior = cmp.SelectBehavior.Select }
-        cmp.setup({
-            snippet = {
-                expand = function(args)
-                    require('luasnip').lsp_expand(args.body)
-                end,
-            },
-            mapping = cmp.mapping.preset.insert({
-                ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-                ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-                ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                ["<C-Space>"] = cmp.mapping.complete(),
-            }),
-            sources = cmp.config.sources({
-                { name = 'path' },
-                { name = 'nvim_lsp' },
-                { name = 'luasnip' },
-                { name = 'conventionalcommits' },
-            }, {
-                { name = 'buffer' },
-            })
-        });
-        vim.diagnostic.config({
-            virtual_text = true,
-            update_in_insert = true,
-            float = {
-                focusable = false,
-                style = "minimal",
-                border = "rounded",
-                source = "always",
-                header = "",
-                prefix = "",
-            }
-        });
-    end,
+		local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+		require("mason-lspconfig").setup({
+			ensure_installed = {
+				"lua_ls",
+				"ts_ls",
+				"gopls",
+				"rust_analyzer",
+				"emmet_ls",
+				"clangd",
+				"astro",
+				"cssls",
+				"tailwindcss",
+			},
+			handlers = {
+				function(server_name)
+					require("lspconfig")[server_name].setup({
+						capabilities = capabilities,
+					})
+				end,
+
+				zls = function()
+					local lspconfig = require("lspconfig")
+					lspconfig.zls.setup({
+						root_dir = lspconfig.util.root_pattern(".git", "build.zig", "zls.json"),
+						capabilities = capabilities,
+						settings = {
+							zls = {
+								enable_inlay_hints = true,
+								enable_snippets = true,
+								warn_style = true,
+							},
+						},
+					})
+					vim.g.zig_fmt_parse_errors = 0
+					vim.g.zig_fmt_autosave = 0
+				end,
+
+				["lua_ls"] = function()
+					local lspconfig = require("lspconfig")
+					lspconfig.lua_ls.setup({
+						capabilities = capabilities,
+						settings = {
+							Lua = {
+								format = {
+									enable = true,
+									defaultConfig = {
+										indent_style = "space",
+										indent_size = "2",
+									},
+								},
+							},
+						},
+					})
+				end,
+
+				["tailwindcss"] = function()
+					local lspconfig = require("lspconfig")
+					lspconfig.tailwindcss.setup({
+						capabilities = capabilities,
+						filetypes = {
+							"html",
+							"css",
+							"scss",
+							"javascript",
+							"javascriptreact",
+							"typescript",
+							"typescriptreact",
+							"vue",
+							"svelte",
+							"heex",
+						},
+					})
+				end,
+			},
+		})
+
+		vim.diagnostic.config({
+			virtual_text = true,
+			update_in_insert = true,
+			float = {
+				focusable = false,
+				style = "minimal",
+				border = "rounded",
+				source = true,
+				header = "",
+				prefix = "",
+			},
+		})
+	end,
 }
