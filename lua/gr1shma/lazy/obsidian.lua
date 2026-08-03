@@ -18,15 +18,17 @@ return {
 		"nvim-lua/plenary.nvim",
 		"ibhagwan/fzf-lua",
 	},
-	init = function()
-		vim.opt.conceallevel = 2
-	end,
 	opts = {
 		workspaces = {
 			{
 				name = "abstract",
 				path = "~/dox/abstract",
 			},
+		},
+		templates = {
+			folder = "notes/_templates/",
+			date_format = "%Y-%m-%d",
+			substitutions = {},
 		},
 		notes_subdir = "",
 		new_notes_location = "current_dir",

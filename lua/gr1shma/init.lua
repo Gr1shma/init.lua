@@ -36,12 +36,13 @@ autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>vrr", vim.lsp.buf.references, opts)
 		vim.keymap.set("n", "<leader>vrn", vim.lsp.buf.rename, opts)
 		vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_next, opts)
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_prev, opts)
 	end,
 })
 
--- Netrw settings
-vim.g.netrw_browse_split = 0
-vim.g.netrw_banner = 0
-vim.g.netrw_winsize = 25
+autocmd("FileType", {
+	pattern = "markdown",
+	group = TheGrishmaGroup,
+	callback = function()
+		vim.opt_local.conceallevel = 2
+	end,
+})
