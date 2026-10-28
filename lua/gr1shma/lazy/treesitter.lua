@@ -5,6 +5,7 @@ return {
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-context",
 		"windwp/nvim-ts-autotag",
+		"davidmh/mdx.nvim",
 	},
 	config = function()
 		require("nvim-treesitter").setup({
